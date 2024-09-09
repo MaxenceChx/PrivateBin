@@ -17,6 +17,6 @@ jobs:
     - name: PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        php_extensions: "fileinfo, json, mbstring, gd, posix"
+        php_extensions: "fileinfo json mbstring gd posix"
         configuration: "phpunit.xml"
         memory_limit: "256M"
