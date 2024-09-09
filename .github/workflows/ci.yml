@@ -15,7 +15,7 @@ jobs:
     - uses: php-actions/composer@v6
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-dev
+      run: composer install
       
     - name: PHPUnit tests
       uses: php-actions/phpunit@v3
