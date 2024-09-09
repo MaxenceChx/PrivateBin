@@ -1,29 +1,31 @@
-name: CI
+name: PHP Composer
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build-test:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+    - uses: php-actions/composer@v6
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          extensions: mbstring, intl, gd
-          ini-values: post_max_size=256M, max_execution_time=180
-          coverage: xdebug
-          tools: php-cs-fixer, phpunit
+    - name: Validate composer.json and composer.lock
+      run: composer validate
 
-      - name: Install Dependencies
-        uses: php-actions/composer@v6
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
 
-      - name: Run PHPUnit tests
-        uses: php-actions/phpunit@v3
-        with:
-          configuration: "phpunit.xml"
-          memory_limit: "256M"
+    - name: Check GD Installation
+      run: php -m | grep gd
+
+    - name: Run PHPUnit tests
+      uses: php-actions/phpunit@v3
+      with:
+        configuration: "phpunit.xml"
+        memory_limit: "256M"
