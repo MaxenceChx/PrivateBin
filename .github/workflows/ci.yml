@@ -13,9 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: php-actions/composer@v6
-
-    - name: Check GD Installation
-      run: php -m | grep gd
       
     - name: PHPUnit tests
       uses: php-actions/phpunit@v3
