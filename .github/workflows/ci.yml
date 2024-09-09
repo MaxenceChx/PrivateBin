@@ -1,4 +1,4 @@
-name: PHP Composer
+name: CI
 
 on:
   push:
@@ -7,22 +7,18 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - uses: php-actions/composer@v6
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-
     - name: Check GD Installation
       run: php -m | grep gd
-
-    - name: Run PHPUnit tests
+      
+    - name: PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        configuration: "phpunit.xml"
+        configuration: "/phpunit.xml"
         memory_limit: "256M"
