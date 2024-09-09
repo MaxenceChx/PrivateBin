@@ -17,6 +17,6 @@ jobs:
     - name: PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        php_extensions: "gd dom json libxml mbstring pcre Phar SimpleXML tokenizer xml xmlwriter xmlreader"
+        php_extensions: "gd dom json libxml mbstring pcre Phar SimpleXML tokenizer xml xmlwriter xmlreader sqlite3"
         configuration: "phpunit.xml"
         memory_limit: "256M"
