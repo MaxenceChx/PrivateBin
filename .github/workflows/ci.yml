@@ -17,6 +17,6 @@ jobs:
     - name: PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        php_extensions: "bcmath ctype curl  dba dom exif fileinfo filter gd gettext gmp hash iconv intl json libxml mbstring openssl pcntl pcre posix pspell random readline session shmop soap sockets sodium standard sysvmsg sysvsem sysvhm tidy tokenizer xsl zlib"
+        php_extensions: "bcmath fileinfo filter gd gmp hash json libxml mbstring openssl random session standard tokenizer"
         configuration: "phpunit.xml"
         memory_limit: "256M"
