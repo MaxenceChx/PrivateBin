@@ -60,7 +60,6 @@ class ServerSaltTest extends TestCase
         $this->assertEquals($salt, ServerSalt::get());
     }
 
-    /*
     public function testPathShenanigans()
     {
         // try setting an invalid path
@@ -115,5 +114,4 @@ class ServerSaltTest extends TestCase
         ServerSalt::setStore($store);
         $this->assertNotEquals($salt, ServerSalt::get());
     }
-    */
 }
