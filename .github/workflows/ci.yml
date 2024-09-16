@@ -15,8 +15,9 @@ jobs:
     - uses: php-actions/composer@v6
       
     - name: PHPUnit tests
-      uses: php-actions/phpunit@v9.6.11
+      uses: php-actions/phpunit@v3
       with:
+        version: "9.6.11"
         php_extensions: "gd dom json libxml mbstring pcre Phar SimpleXML tokenizer xml xmlwriter xmlreader sqlite3"
         configuration: "phpunit.xml"
         memory_limit: "256M"
