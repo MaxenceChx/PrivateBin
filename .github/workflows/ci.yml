@@ -13,11 +13,33 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: php-actions/composer@v6
-      
-    - name: PHPUnit tests
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: PHPUnit tests with coverage
       uses: php-actions/phpunit@v3
       with:
         version: "9.6.11"
         php_extensions: "gd dom json libxml mbstring pcre Phar SimpleXML tokenizer xml xmlwriter xmlreader sqlite3"
         configuration: "phpunit.xml"
-        memory_limit: "256M"
+        memory_limit: "1024M"
+        args: '--coverage-text --coverage-clover=log/coverage-clover.xml'
+
+    - name: Upload coverage report in text format
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-text
+        path: log/coverage.txt
+
+    - name: Upload cobertura coverage report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-cobertura
+        path: log/coverage-cobertura.xml
+
+    - name: Upload HTML coverage report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-html
+        path: log/php-coverage-report/
