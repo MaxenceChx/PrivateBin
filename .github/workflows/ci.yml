@@ -25,6 +25,11 @@ jobs:
         configuration: "phpunit.xml"
         memory_limit: "1024M"
         args: '--coverage-text=log/coverage.txt --coverage-cobertura=log/coverage-cobertura.xml'
+      env:
+        XDEBUG_MODE: coverage
+
+    - name: List log directory
+      run: ls -al log/
 
     - name: Upload coverage report in text format
       uses: actions/upload-artifact@v3
