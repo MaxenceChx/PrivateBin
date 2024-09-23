@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tst/Bootstrap.php" colors="true" failOnWarning="false" failOnDeprecation="false" stopOnWarning="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
+  <coverage>
     <include>
       <directory suffix=".php">./lib</directory>
       <directory suffix=".php">./vendor</directory>
@@ -11,8 +11,6 @@
     <report>
       <clover outputFile="log/coverage-clover.xml"/>
       <html outputDirectory="log/php-coverage-report" lowUpperBound="50" highLowerBound="80"/>
-      <cobertura outputFile="log/coverage-cobertura.xml"/>
-      <text outputFile="log/coverage.txt"/>
     </report>
   </coverage>
   <testsuite name="PrivateBin Test Suite">

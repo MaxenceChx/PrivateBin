@@ -48,7 +48,6 @@
 		"sort-packages": true
 	},
 	"require-dev": {
-		"phpunit/php-code-coverage": "^9.2",
-		"phpunit/phpunit": "9.6.11"
+		"phpunit/phpunit" : "^9"
 	}
 }
