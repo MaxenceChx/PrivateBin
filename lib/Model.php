@@ -27,14 +27,14 @@ class Model
      *
      * @var Configuration
      */
-    private $_conf;
+    private $conf;
 
     /**
      * Data storage.
      *
      * @var Data\AbstractData
      */
-    private $_store = null;
+    private $store = null;
 
     /**
      * Factory constructor.
@@ -43,7 +43,7 @@ class Model
      */
     public function __construct(Configuration $conf)
     {
-        $this->_conf = $conf;
+        $this->conf = $conf;
     }
 
     /**
@@ -54,7 +54,7 @@ class Model
      */
     public function getPaste($pasteId = null)
     {
-        $paste = new Paste($this->_conf, $this->getStore());
+        $paste = new Paste($this->conf, $this->getStore());
         if ($pasteId !== null) {
             $paste->setId($pasteId);
         }
@@ -66,10 +66,10 @@ class Model
      */
     public function purge()
     {
-        PurgeLimiter::setConfiguration($this->_conf);
+        PurgeLimiter::setConfiguration($this->conf);
         PurgeLimiter::setStore($this->getStore());
         if (PurgeLimiter::canPurge()) {
-            $this->getStore()->purge($this->_conf->getKey('batchsize', 'purge'));
+            $this->getStore()->purge($this->conf->getKey('batchsize', 'purge'));
         }
     }
 
@@ -80,10 +80,10 @@ class Model
      */
     public function getStore()
     {
-        if ($this->_store === null) {
-            $class        = 'PrivateBin\\Data\\' . $this->_conf->getKey('class', 'model');
-            $this->_store = new $class($this->_conf->getSection('model_options'));
+        if ($this->store === null) {
+            $class        = 'PrivateBin\\Data\\' . $this->conf->getKey('class', 'model');
+            $this->store = new $class($this->conf->getSection('model_options'));
         }
-        return $this->_store;
+        return $this->store;
     }
 }

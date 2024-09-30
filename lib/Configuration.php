@@ -27,14 +27,14 @@ class Configuration
      *
      * @var array
      */
-    private $_configuration;
+    private $configuration;
 
     /**
      * default configuration
      *
      * @var array
      */
-    private static $_defaults = array(
+    private static $defaults = array(
         'main' => array(
             'name'                     => 'PrivateBin',
             'basepath'                 => '',
@@ -130,16 +130,16 @@ class Configuration
         foreach (self::getDefaults() as $section => $values) {
             // fill missing sections with default values
             if (!array_key_exists($section, $config) || count($config[$section]) == 0) {
-                $this->_configuration[$section] = $values;
-                if (array_key_exists('dir', $this->_configuration[$section])) {
-                    $this->_configuration[$section]['dir'] = PATH . $this->_configuration[$section]['dir'];
+                $this->configuration[$section] = $values;
+                if (array_key_exists('dir', $this->configuration[$section])) {
+                    $this->configuration[$section]['dir'] = PATH . $this->configuration[$section]['dir'];
                 }
                 continue;
             }
             // provide different defaults for database model
             elseif (
                 $section == 'model_options' && in_array(
-                    $this->_configuration['model']['class'],
+                    $this->configuration['model']['class'],
                     array('Database', 'privatebin_db', 'zerobin_db')
                 )
             ) {
@@ -152,7 +152,7 @@ class Configuration
                 );
             } elseif (
                 $section == 'model_options' && in_array(
-                    $this->_configuration['model']['class'],
+                    $this->configuration['model']['class'],
                     array('GoogleCloudStorage')
                 )
             ) {
@@ -163,7 +163,7 @@ class Configuration
                 );
             } elseif (
                 $section == 'model_options' && in_array(
-                    $this->_configuration['model']['class'],
+                    $this->configuration['model']['class'],
                     array('S3Storage')
                 )
             ) {
@@ -188,7 +188,7 @@ class Configuration
                 if (is_int(current($values))) {
                     $config[$section] = array_map('intval', $config[$section]);
                 }
-                $this->_configuration[$section] = $config[$section];
+                $this->configuration[$section] = $config[$section];
             }
             // check for missing keys and set defaults if necessary
             else {
@@ -215,34 +215,34 @@ class Configuration
                             $result = (string) $config[$section][$key];
                         }
                     }
-                    $this->_configuration[$section][$key] = $result;
+                    $this->configuration[$section][$key] = $result;
                 }
             }
         }
 
         // support for old config file format, before the fork was renamed and PSR-4 introduced
-        $this->_configuration['model']['class'] = str_replace(
+        $this->configuration['model']['class'] = str_replace(
             'zerobin_', 'privatebin_',
-            $this->_configuration['model']['class']
+            $this->configuration['model']['class']
         );
 
-        $this->_configuration['model']['class'] = str_replace(
+        $this->configuration['model']['class'] = str_replace(
             array('privatebin_data', 'privatebin_db'),
             array('Filesystem', 'Database'),
-            $this->_configuration['model']['class']
+            $this->configuration['model']['class']
         );
 
         // ensure a valid expire default key is set
-        if (!array_key_exists($this->_configuration['expire']['default'], $this->_configuration['expire_options'])) {
-            $this->_configuration['expire']['default'] = key($this->_configuration['expire_options']);
+        if (!array_key_exists($this->configuration['expire']['default'], $this->configuration['expire_options'])) {
+            $this->configuration['expire']['default'] = key($this->configuration['expire_options']);
         }
 
         // ensure the basepath ends in a slash, if one is set
         if (
-            strlen($this->_configuration['main']['basepath']) &&
-            substr_compare($this->_configuration['main']['basepath'], '/', -1) !== 0
+            strlen($this->configuration['main']['basepath']) &&
+            substr_compare($this->configuration['main']['basepath'], '/', -1) !== 0
         ) {
-            $this->_configuration['main']['basepath'] .= '/';
+            $this->configuration['main']['basepath'] .= '/';
         }
     }
 
@@ -253,7 +253,7 @@ class Configuration
      */
     public function get()
     {
-        return $this->_configuration;
+        return $this->configuration;
     }
 
     /**
@@ -263,7 +263,7 @@ class Configuration
      */
     public static function getDefaults()
     {
-        return self::$_defaults;
+        return self::$defaults;
     }
 
     /**
@@ -280,7 +280,7 @@ class Configuration
         if (!array_key_exists($key, $options)) {
             throw new Exception(I18n::_('Invalid data.') . " $section / $key", 4);
         }
-        return $this->_configuration[$section][$key];
+        return $this->configuration[$section][$key];
     }
 
     /**
@@ -292,9 +292,9 @@ class Configuration
      */
     public function getSection($section)
     {
-        if (!array_key_exists($section, $this->_configuration)) {
+        if (!array_key_exists($section, $this->configuration)) {
             throw new Exception(I18n::_('%s requires configuration section [%s] to be present in configuration file.', I18n::_($this->getKey('name')), $section), 3);
         }
-        return $this->_configuration[$section];
+        return $this->configuration[$section];
     }
 }
