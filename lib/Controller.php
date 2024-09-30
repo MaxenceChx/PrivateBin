@@ -240,12 +240,11 @@ class Controller
                     $comment->setData($data);
                     $comment->store();
                 } catch (Exception $e) {
-                    $this->_return_message(1, $e->getMessage());
-                    return;
+                    return $this->_return_message(1, $e->getMessage());
                 }
-                $this->_return_message(0, $comment->getId());
+                return $this->_return_message(0, $comment->getId());
             } else {
-                $this->_return_message(1, I18n::_('Invalid data.'));
+                return $this->_return_message(1, I18n::_('Invalid data.'));
             }
         }
         // The user posts a standard paste.
@@ -258,7 +257,7 @@ class Controller
             } catch (Exception $e) {
                 return $this->_return_message(1, $e->getMessage());
             }
-            $this->_return_message(0, $paste->getId(), array('deletetoken' => $paste->getDeleteToken()));
+            return $this->_return_message(0, $paste->getId(), array('deletetoken' => $paste->getDeleteToken()));
         }
     }
 
