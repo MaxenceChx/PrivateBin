@@ -53,5 +53,22 @@ jobs:
 
     - name: Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+  
+  web-deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+    name: 🎉 Deploy
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_URL }}
+        username: ${{ secrets.FTP_LOGIN }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        exclude: |
+          vendor/**
 
 
