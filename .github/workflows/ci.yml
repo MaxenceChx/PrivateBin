@@ -122,6 +122,7 @@ jobs:
         server: ${{ secrets.FTP_URL }}
         username: ${{ secrets.FTP_LOGIN }}
         password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /www/
         exclude: |
           **/.git*
           **/.git*/**
