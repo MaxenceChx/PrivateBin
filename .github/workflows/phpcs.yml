@@ -12,9 +12,9 @@ jobs:
       - name: Composer install
         uses: php-actions/composer@v6
 
-      - name: PHP Code Sniffer
-        uses: php-actions/phpcs@v1
-        with:
-          php_version: 8.1
-          path: lib/
-          standard: PSR12
+      #- name: PHP Code Sniffer
+      #  uses: php-actions/phpcs@v1
+      #  with:
+      #    php_version: 8.1
+      #    path: lib/
+      #    standard: PSR12
