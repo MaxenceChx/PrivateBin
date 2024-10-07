@@ -53,9 +53,77 @@ jobs:
 
     - name: Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+
+  php-cs:
+    runs-on: ubuntu-latest
+    name: 🧹 PHP Code Sniffer
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 📦 Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, dom, xml, zip, curl, json, sqlite3, pdo_sqlite, xdebug
+
+    - name: 📦 Install Composer dependencies
+      run: composer install
+
+    #- name: PHP Code Sniffer
+    #  uses: php-actions/phpcs@v1
+    #  with:
+    #    php_version: 8.1
+    #    path: lib/
+    #    standard: PSR12
+
+  php-md:
+    runs-on: ubuntu-latest
+    name: 🧹 PHP Mess Detector
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 📦 Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, dom, xml, zip, curl, json, sqlite3, pdo_sqlite, xdebug
+
+    - name: 📦 Install Composer dependencies
+      run: composer install
+
+    #- name: PHP Mess Detector
+    #  uses: php-actions/phpmd@v1
+    #  with:
+    #    php_version: 8.1
+    #    path: lib/
+    #    output: text
+    #    ruleset: cleancode,codesize,controversial,design,naming,unusedcode
+
+  php-stan: 
+    runs-on: ubuntu-latest
+    name: 🧹 PHPStan
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 📦 Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, dom, xml, zip, curl, json, sqlite3, pdo_sqlite, xdebug
+
+    - name: 📦 Install Composer dependencies
+      run: composer install
+
+    - name: PHPStan
+      uses: php-actions/phpstan@v1
+      with:
+        path: lib/
   
   web-deploy:
-    needs: build-test
+    needs: [build-test, php-cs, php-md, php-stan]
     runs-on: ubuntu-latest
     name: 🎉 Deploy
     steps:
@@ -69,6 +137,9 @@ jobs:
         username: ${{ secrets.FTP_LOGIN }}
         password: ${{ secrets.FTP_PASSWORD }}
         exclude: |
-          vendor/**
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/vendor/**
 
 
