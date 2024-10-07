@@ -1,4 +1,4 @@
-name: CI
+name: 🛠️ CI Pipeline
 
 on:
   push:
@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: 📥 Checkout code
       uses: actions/checkout@v3
 
-    - name: Composer install
+    - name: 📦 Composer install
       uses: php-actions/composer@v6
 
-    - name: Ensure log directory exists
+    - name: 📂 Ensure log directory exists
       run: mkdir -p log
 
-    - name: PHPUnit tests with coverage
+    - name: 🧪 PHPUnit tests with coverage
       uses: php-actions/phpunit@v3
       with:
         version: "9.6.11"
@@ -32,22 +32,22 @@ jobs:
       env:
         XDEBUG_MODE: coverage
 
-    - name: List log directory
+    - name: 📂 List log directory
       run: ls -al log/
 
-    - name: Upload coverage report in text format
+    - name: ⬆️ Upload coverage report in text format
       uses: actions/upload-artifact@v3
       with:
         name: coverage-text
         path: log/coverage.txt
 
-    - name: Upload cobertura coverage report
+    - name: ⬆️ Upload cobertura coverage report
       uses: actions/upload-artifact@v3
       with:
         name: coverage-cobertura
         path: log/coverage-cobertura.xml
-        
-    - name: Code Coverage Summary Report
+
+    - name: 📊 Code Coverage Summary Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: log/coverage-cobertura.xml
@@ -55,23 +55,20 @@ jobs:
         format: 'markdown'
         output: 'both'
 
-    - name: Write to Job Summary
+    - name: 📝 Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
   php-cs:
     runs-on: ubuntu-latest
     name: 🧹 PHP Code Sniffer
     steps:
-    - name: 🚚 Get latest code
+    - name: 📥 Get latest code
       uses: actions/checkout@v4
 
-    - name: Composer install
+    - name: 📦 Composer install
       uses: php-actions/composer@v6
 
-    - name: 📦 Install Composer dependencies
-      run: composer install
-
-    #- name: PHP Code Sniffer
+    #- name: 🔍 PHP Code Sniffer
     #  uses: php-actions/phpcs@v1
     #  with:
     #    php_version: 8.1
@@ -80,15 +77,15 @@ jobs:
 
   php-md:
     runs-on: ubuntu-latest
-    name: 🧹 PHP Mess Detector
+    name: 🔎 PHP Mess Detector
     steps:
-    - name: 🚚 Get latest code
+    - name: 📥 Get latest code
       uses: actions/checkout@v4
 
-    - name: Composer install
+    - name: 📦 Composer install
       uses: php-actions/composer@v6
 
-    #- name: PHP Mess Detector
+    #- name: 💥 PHP Mess Detector
     #  uses: php-actions/phpmd@v1
     #  with:
     #    php_version: 8.1
@@ -98,15 +95,15 @@ jobs:
 
   php-stan: 
     runs-on: ubuntu-latest
-    name: 🧹 PHPStan
+    name: 🔍 PHPStan
     steps:
-    - name: 🚚 Get latest code
+    - name: 📥 Get latest code
       uses: actions/checkout@v4
 
-    - name: Composer install
+    - name: 📦 Composer install
       uses: php-actions/composer@v6
 
-    - name: PHPStan
+    - name: 🔍 PHPStan
       uses: php-actions/phpstan@v1
       with:
         path: lib/
@@ -116,7 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 🎉 Deploy
     steps:
-    - name: 🚚 Get latest code
+    - name: 📥 Get latest code
       uses: actions/checkout@v4
 
     - name: 📂 Sync files
@@ -130,5 +127,3 @@ jobs:
           **/.git*/**
           **/node_modules/**
           **/vendor/**
-
-
