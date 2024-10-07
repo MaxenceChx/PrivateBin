@@ -8,11 +8,15 @@ on:
 
 jobs:
   build-test:
+    name: 🧪 Build and Test
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: php-actions/composer@v6
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Composer install
+      uses: php-actions/composer@v6
 
     - name: Ensure log directory exists
       run: mkdir -p log
@@ -61,11 +65,8 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: 📦 Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'
-        extensions: mbstring, dom, xml, zip, curl, json, sqlite3, pdo_sqlite, xdebug
+    - name: Composer install
+      uses: php-actions/composer@v6
 
     - name: 📦 Install Composer dependencies
       run: composer install
@@ -84,14 +85,8 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: 📦 Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'
-        extensions: mbstring, dom, xml, zip, curl, json, sqlite3, pdo_sqlite, xdebug
-
-    - name: 📦 Install Composer dependencies
-      run: composer install
+    - name: Composer install
+      uses: php-actions/composer@v6
 
     #- name: PHP Mess Detector
     #  uses: php-actions/phpmd@v1
@@ -108,14 +103,8 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: 📦 Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'
-        extensions: mbstring, dom, xml, zip, curl, json, sqlite3, pdo_sqlite, xdebug
-
-    - name: 📦 Install Composer dependencies
-      run: composer install
+    - name: Composer install
+      uses: php-actions/composer@v6
 
     - name: PHPStan
       uses: php-actions/phpstan@v1
